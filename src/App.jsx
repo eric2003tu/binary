@@ -14,6 +14,7 @@ function App() {
   const [disabled, setDisabled] = useState(true)
   const [signUpError, setSignUpError] = useState('')
   const [errorColor, setErrorColor] = useState('red')
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(function(){
     const strongPass = (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/^[a-zA-Z0-9]/.test(password) )
@@ -26,6 +27,7 @@ function App() {
   },[firstName,lastName,email,password,disabled])
 
   const handleSignup = function(event){
+    setIsSubmitting(true);
     event.preventDefault()
     fetch('https://employee-management-app-ghrg.onrender.com/api/user/signup',{
       method: 'POST',
@@ -43,6 +45,7 @@ function App() {
       if(!response.ok){
         if(response.status === 404){
           setSignUpError('Bad request, check your inputs')
+          setIsSubmitting(false);
           setErrorColor('red')
           setTimeout(function(){
             setSignUpError('')
@@ -51,6 +54,7 @@ function App() {
         }
         else if(response.status === 500){
           setSignUpError('Internal server Error')
+          setIsSubmitting(false);
           setErrorColor('red')
           setTimeout(function(){
             setSignUpError('')
@@ -60,6 +64,7 @@ function App() {
         }
         else if(response.status === 400){
           setSignUpError('Invalid inputs')
+          setIsSubmitting(false);
           setErrorColor('red')
           setTimeout(function(){
             setSignUpError('')
@@ -68,6 +73,7 @@ function App() {
         }
         else{
           setSignUpError('another error occured'+ response.status)
+          setIsSubmitting(false);
           setErrorColor('red')
           setTimeout(function(){
             setSignUpError('')
@@ -80,6 +86,7 @@ function App() {
     .then(function(data){
       if(data){
         setSignUpError('User was successfully registered')
+        setIsSubmitting(false);
         setErrorColor('green')
         setTimeout(function(){
           setSignUpError('')
@@ -88,6 +95,7 @@ function App() {
       }
       else{
         setSignUpError('User not added')
+        setIsSubmitting(false);
         setErrorColor('red')
         setTimeout(function(){
           setSignUpError('')
@@ -97,6 +105,7 @@ function App() {
     })
     .catch(function(error){
       console.error('Failed to register the user, check your internet connections: ',error)
+      setIsSubmitting(false);
       setSignUpError('Failed to register the user, check your internet connections')
       setErrorColor('red')
       setTimeout(function(){
@@ -160,7 +169,16 @@ function App() {
             {(!showPassword || !password) ? <EyeOff/> : <Eye/>}
            </button>
           </div>
-          <button type='submit' disabled={disabled} className={disabled ? 'self-end text-center text-white bg-gray-300 pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px] cursor-not-allowed' : 'self-end cursor-pointer text-center text-white bg-[#42bf15] pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px]'}>Continue</button>
+          <button type='submit' disabled={disabled} className={disabled || isSubmitting ? 'self-end text-center text-white bg-gray-300 pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px] cursor-not-allowed' : 'self-end cursor-pointer text-center text-white bg-[#42bf15] pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px]'}>
+    
+                  {isSubmitting ? (
+                    <div className="flex justify-center">
+                      <div className="w-6 h-6 border-2 border-white border-t-blue-600 rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    'Continue'
+                  )}
+          </button>
         </form>
         <footer className='grid sm:grid-cols-1 md:flex-col-1  lg:grid-cols-2  bottom-0 right-0 w-full  p-[5px] text-gray-700  mt-[45px]'>
           <p className='text-gray-500'>By signing up, you agree to our <a className='text-[#42bf15]'>Terms </a> and <a className='text-[#42bf15]'>Privacy Policy</a></p>
