@@ -77,15 +77,16 @@ const Login = () => {
       })
       .then(function(data){
         if(data){
-          setSignUpError('User was successfully registered')
+          setSignUpError('User was successfully logged in')
           setErrorColor('green')
           setTimeout(function(){
             setSignUpError('')
+            navigate('/dashboard')
           },4000)
           return
         }
         else{
-          setSignUpError('User not added')
+          setSignUpError('User not found')
           setErrorColor('red')
           setTimeout(function(){
             setSignUpError('')
@@ -94,8 +95,8 @@ const Login = () => {
         }
       })
       .catch(function(error){
-        console.error('Failed to register the user, check your internet connections: ',error)
-        setSignUpError('Failed to register the user, check your internet connections')
+        console.error('Failed to login the user, check your internet connections: ',error)
+        setSignUpError('Failed to login the user, check your internet connections')
         setErrorColor('red')
         setTimeout(function(){
           setSignUpError('')

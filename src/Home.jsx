@@ -85,6 +85,7 @@ function Homes() {
         setErrorColor('green')
         setTimeout(function(){
           setSignUpError('')
+          navigate('/dashboard')
         },4000)
         return
       }

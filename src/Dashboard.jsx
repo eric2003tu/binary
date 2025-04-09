@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdCloudCircle } from "react-icons/io";
 import { FaSortDown } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -9,10 +9,29 @@ import { FaAngleLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [dashClicked, setDashClicked] = useState(false)
+  const [dashClicked, setDashClicked] = useState(true)
   const [userClicked, setUserClicked] = useState(false)
   const [cardClicked, setCardClicked] = useState(false)
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    // Fetch the users once the component mounts
+    fetch('https://employee-management-app-ghrg.onrender.com/api/user/users')
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        setUsers(data); // Store the fetched users in the state
+      })
+      .catch(function(error) {
+        console.error('Network issue: ', error);
+      });
+  }, []); 
+
   return (
     <div className='h-screen'>
       <div className='top-0 p-[10px] z-[1000] flex flex-col border-b-[0.3px] border-b-gray-300 gap-[100%] w-full h-fit bg-white sticky'>
@@ -63,7 +82,7 @@ const Dashboard = () => {
 
   {/* Right nav */}
 
-  <div className='h-full w-full overflow-auto p-[10px] bg-[#f1f1f4]'>
+  <div className={userClicked ? 'h-full w-full overflow-auto p-[10px] bg-[#f1f1f4]' : 'hidden'}>
     <div className=' flex flex-col w-full p-[20px] pt-[7px]'>
       <button type='button' className=' text-center self-end bg-[#5cde20] text-white text-[17px] font-bold pr-[25px] pl-[25px] p-[7px] rounded-[5px]'>
         Add New
@@ -85,15 +104,44 @@ const Dashboard = () => {
         <FaAngleRight size={20} className='text-[#5cde20]'/>
         </div>
         <div className='  flex flex-row gap-2 mt-[-19px]'>
-          <select name='role' className='bg-white w-fit p-[7px] border border-y-gray-400 rounded-[5px] text-gray-600'>
+          <select name='role' className='bg-white w-fit p-[7px] border  border-y-gray-400 rounded-[5px] text-gray-600'>
             <option  value=''selected disabled>Change Role</option>
-            <option value='Employee'>Employee</option>
-            <option value='Employer'>Employer</option>
+            <option value='Employee' className='hover:bg-[#5cde20]'>Employee</option>
+            <option value='Employer' className='hover:bg-[#5cde20]'>Employer</option>
           </select>
           <button type='button' className='rounded-[5px] text-center self-end bg-[#5cde20] text-white text-[15px] font-bold pr-[25px] pl-[25px] p-[7px]'>Change</button>
           <input type='search' name='search' placeholder='Enter a staff name here...' className='text-gray-500 placeholder:text-gray-500 p-[7px] rounded-[5px] border border-gray-400 w-[260px] pr-[10px] bg-white'/>
         </div>
     </div>
+    <table className='w-full h-fit mt-[10px]'>
+      <thead className='p-[10px]'>
+        <tr className='text-[#040454] border-b border-t'>
+          <th>FIRST NAME</th>
+          <th>LAST NAME</th>
+          <th>EMAIL</th>
+          <th>PHONE</th>
+          <th>ROLE</th>
+        </tr>
+      </thead>
+      <tbody>
+          {/* Render table rows dynamically using the users state */}
+          {users.length === 0 ? (
+            <tr>
+              <td colSpan="5" className='text-center text-[18px]'>No users available</td>
+            </tr>
+          ) : (
+            users.map((value, index) => (
+              <tr key={index}>
+                <td>{value.firstname}</td>
+                <td>{value.lastName}</td>
+                <td>{value.Email}</td>
+                <td>{value.phone}</td>
+                <td>{value.role}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+    </table>
   </div>
   </div>
   </div>
