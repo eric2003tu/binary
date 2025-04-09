@@ -15,17 +15,18 @@ function Homes() {
   const [disabled, setDisabled] = useState(true)
   const [signUpError, setSignUpError] = useState('')
   const [errorColor, setErrorColor] = useState('red')
+  const [role, setRole] = useState('')
   const navigate = useNavigate();
 
   useEffect(function(){
     const strongPass = (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/^[a-zA-Z0-9]/.test(password) )
-    if(!firstName || !lastName || !email || !password || strongPass ){
+    if(!firstName || !lastName || !email || !password || strongPass || !role ){
       setDisabled(true)
     }
     else{
       setDisabled(false)
     }
-  },[firstName,lastName,email,password,disabled])
+  },[firstName,lastName,email,password,disabled,role])
 
   const handleSignup = function(event){
     event.preventDefault()
@@ -157,6 +158,13 @@ function Homes() {
             <Mail/>
            </button>
           </div>
+          <select name='role' value={role} onChange={function(e){
+            setRole(e.target.value)
+          }}  className=' w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b'>
+            <option  value=''selected disabled className='text-gray-400'>Change Role</option>
+            <option value='Employee' className='hover:bg-[#5cde20]'>Employee</option>
+            <option value='Employer' className='hover:bg-[#5cde20]'>Employer</option>
+          </select>
           <div className="relative">
           <label htmlFor='Password' className=' text-gray-600'>Password</label>
           <input type={showPassword ? "text" : "password"} name='password' value={password} onChange={function(e){
