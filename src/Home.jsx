@@ -178,8 +178,8 @@ function Homes() {
             setRole(e.target.value)
           }}  className=' w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b'>
             <option  value=''selected disabled className='text-gray-400'>Change Role</option>
-            <option value='User' className='hover:bg-[#5cde20]'>user</option>
-            <option value='Employee' className='hover:bg-[#5cde20]'>Employee</option>
+            <option value='user' className='hover:bg-[#5cde20]'>user</option>
+            <option value='employee' className='hover:bg-[#5cde20]'>Employee</option>
           </select>
           <div className="relative">
           <label htmlFor='Password' className=' text-gray-600'>Password</label>
