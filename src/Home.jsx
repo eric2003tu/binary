@@ -31,7 +31,7 @@ function Homes() {
 
   const handleSignup = function(event){
     event.preventDefault()
-    fetch('https://employee-management-app-ghrg.onrender.com/api/employee',{
+    fetch('https://employee-management-app-ghrg.onrender.com/api/user',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
@@ -42,8 +42,8 @@ function Homes() {
         Lname: lastName,
         email: email,
         password: password,
-        role: role,
-        phone: phone,
+        // role: role,
+        // phone: phone,
       })
     })
     .then(function(response){
