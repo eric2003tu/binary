@@ -31,7 +31,7 @@ function Homes() {
 
   const handleSignup = function(event){
     event.preventDefault()
-    fetch('https://employee-management-app-ghrg.onrender.com/api/employee',{
+    fetch('https://employee-management-app-ghrg.onrender.com/api/user',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
@@ -41,9 +41,9 @@ function Homes() {
         Fname: firstName,
         Lname: lastName,
         email: email,
-        //password: password,
-        role: role,
-        phone: phone,
+        password: password,
+        // role: role,
+        // phone: phone,
       })
     })
     .then(function(response){
@@ -178,8 +178,8 @@ function Homes() {
             setRole(e.target.value)
           }}  className=' w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b'>
             <option  value=''selected disabled className='text-gray-400'>Change Role</option>
-            <option value='Employee' className='hover:bg-[#5cde20]'>Employee</option>
-            <option value='Employer' className='hover:bg-[#5cde20]'>Employer</option>
+            <option value='User' className='hover:bg-[#5cde20]'>Employee</option>
+            <option value='Employee' className='hover:bg-[#5cde20]'>Employer</option>
           </select>
           <div className="relative">
           <label htmlFor='Password' className=' text-gray-600'>Password</label>
