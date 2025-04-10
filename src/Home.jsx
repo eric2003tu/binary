@@ -36,6 +36,7 @@ function Homes() {
       headers:{
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({
         Fname: firstName,
         Lname: lastName,
@@ -152,6 +153,7 @@ function Homes() {
            </button>
           </div>
           </div>
+          <div className='w-full grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3'>
           <div className='relative'>
           <label htmlFor='email' className=' text-gray-600'>Email address</label>
           <input type='email' name='email' placeholder='Your email address' value={email} onChange={function(e){
@@ -170,6 +172,8 @@ function Homes() {
             <Mail/>
            </button>
           </div>
+          </div>
+          <div className='w-full grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3'>
           <select name='role' value={role} onChange={function(e){
             setRole(e.target.value)
           }}  className=' w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b'>
@@ -186,6 +190,7 @@ function Homes() {
           onClick={() => setShowPassword(!showPassword)}>
             {(!showPassword || !password) ? <EyeOff/> : <Eye/>}
            </button>
+          </div>
           </div>
           <button type='submit' disabled={disabled} className={disabled ? 'self-end text-center text-white bg-gray-300 pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px] cursor-not-allowed' 
             : 'self-end cursor-pointer text-center text-white bg-[#42bf15] pl-[20px] pr-[20px] p-[10px] text-[25px] rounded-[10px]'}>
