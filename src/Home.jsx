@@ -16,17 +16,18 @@ function Homes() {
   const [signUpError, setSignUpError] = useState('')
   const [errorColor, setErrorColor] = useState('red')
   const [role, setRole] = useState('')
+  const [phone, setPhone] = useState('')
   const navigate = useNavigate();
 
   useEffect(function(){
     const strongPass = (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/^[a-zA-Z0-9]/.test(password) )
-    if(!firstName || !lastName || !email || !password || strongPass || !role ){
+    if(!firstName || !lastName || !email || !password || strongPass || !role || !phone ){
       setDisabled(true)
     }
     else{
       setDisabled(false)
     }
-  },[firstName,lastName,email,password,disabled,role])
+  },[firstName,lastName,email,password,disabled,role,phone])
 
   const handleSignup = function(event){
     event.preventDefault()
@@ -40,6 +41,8 @@ function Homes() {
         Lname: lastName,
         email: email,
         password: password,
+        role: role,
+        phone: phone,
       })
     })
     .then(function(response){
@@ -153,6 +156,15 @@ function Homes() {
           <label htmlFor='email' className=' text-gray-600'>Email address</label>
           <input type='email' name='email' placeholder='Your email address' value={email} onChange={function(e){
             setEmail(e.target.value)
+          }} className='w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b placeholder:text-gray-400'/>
+          <button type="button" className="absolute right-3 top-2/3 transform -translate-y-1/2 text-sm text-gray-600" >
+            <Mail/>
+           </button>
+          </div>
+          <div className='relative'>
+          <label htmlFor='phone' className=' text-gray-600'>Phone number</label>
+          <input type='tel' name='phone' placeholder='Your phone number' value={phone} onChange={function(e){
+            setPhone(e.target.value)
           }} className='w-full border-b border-gray-400  p-[10px] rounded-[3px] bg-gray-100/50 text-blue-950 focus:border-b placeholder:text-gray-400'/>
           <button type="button" className="absolute right-3 top-2/3 transform -translate-y-1/2 text-sm text-gray-600" >
             <Mail/>

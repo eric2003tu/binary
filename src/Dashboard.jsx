@@ -240,7 +240,7 @@ const Dashboard = () => {
             </tr>
           ) : (
             users.map((value, index) => (
-              <tr key={index}>
+              <tr key={index} className='bg-white 203260 text-[#040454]'>
                 <td>{value.firstname}</td>
                 <td>{value.lastName}</td>
                 <td>{value.Email}</td>
